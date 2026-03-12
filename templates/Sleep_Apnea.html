@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Body Members</title>
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/css.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: #376A3A;
+  color: white;
+ 
+}
+
+
+#info-panel {
+position: relative;
+top: 70px  !important;
+padding: 25px;
+  text-align: justify;
+}
+
+  .navbar {
+    background-color: rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+    
+  }
+
+  .navbar-dark .nav-link {
+    color: white !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .navbar-dark .nav-link:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 15px;
+  }
+  .nervous {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #1E88E5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 15%;
+  left: 43%;
+}
+.img-row {
+  display: flex;
+  width: 100%;
+  gap: 2%;
+}
+
+.img-row img {
+  flex: 1;                
+  max-width: 18%;         
+  aspect-ratio: 1 / 1;   
+  object-fit: fill;
+  border-radius: 6px;
+}
+ol li::marker {
+  color: orange;
+}
+
+</style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="home">
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo" width="30" height="30" class="me-2">
+        Aktivio
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+          <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+          <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Recommendations</a></li>
+          <li class="nav-item"><a class="nav-link" href="test_your_self">Tests</a></li>
+          <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+          <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="logout" class="btn btn-light me-2">Logout</a>
+          <div class="d-flex align-items-center text-white">
+            {% if not session['img'] %}
+            <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?o=7rm=3&rs=1&pid=ImgDetMain" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%else%}
+            <img src="{{url_for('static',filename=session['img'])}}" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%endif%}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<!-------------------------------------------------->
+
+
+  <!-- RIGHT SIDE DESCRIPTION -->
+  <div id="info-panel">
+    <h2 id="title">Sleep apnea</h2>
+    <p id="desc">Sleep apnea is a condition in which a person's breathing is repeatedly interrupted during sleep. These pauses can last from a few seconds to a minute and occur dozens, sometimes hundreds, of times per night, leading to a lack of oxygen in the body and poor sleep quality.</p>
+    <div class="img-row">
+
+        <img src="{{ url_for('static', filename='images/sa1.png') }}" alt="">
+        <img src="{{ url_for('static', filename='images/sa2.png') }}" alt="">
+        <img src="{{ url_for('static', filename='images/sa3.png') }}" alt="">
+        <img src="{{ url_for('static', filename='images/sa4.png') }}" alt="">
+        <img src="{{ url_for('static', filename='images/sa5.png') }}" alt="">
+    </div>
+    <br>
+Causes of sleep apnea<br><br><br>
+There are several types of sleep apnea, each with its own causes:<br><br>
+     <ol>
+        <li><span style='color:orange'>Obstructive sleep apnea (OSA) </span>is the most common type, which occurs due to the collapse of the upper airway. This can be caused by:
+        <ul>
+            <li>
+                Reduced muscle tone in the pharynx
+            </li>
+            <li>
+                Excess weight
+            </li>
+            <li>
+                Anatomical features, such as a wide and short neck
+            </li>
+            <li>
+                Enlarged tonsils, narrow airways, malocclusion
+            </li>
+            <li>
+               Alcohol consumption, smoking, or sleeping pills
+            </li>
+            
+        </ul>
+        
+</li>
+        <li><span style='color:orange'>Central sleep apnea (CSA)  </span>this type is less common and is associated with disturbances in the functioning of the respiratory center of the brain. Causes include:
+            <ul>
+            <li>
+                Neurological diseases, including brain stem infarcts Use of opioid analgesics 
+            </li>
+            <li>
+                Chronic heart failure
+            </li>
+            <li>
+                Chronic kidney disease
+            </li>
+           
+            
+        </ul>
+        
+        </li>
+
+         <li><span style='color:orange'>Mixed apnea </span>a combination of both types.
+           
+        
+        </li>
+
+     </ol>
+
+    </div>
+
+
+
+
+</body>
+</html>

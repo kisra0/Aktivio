@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/css.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  
+</head>
+<body>
+  <button class="exit-button" onclick="window.location.href='home'" title="Go tp Home">
+  <i class="fas fa-times"></i>
+</button>
+
+<div id="overlay" class="overlay">
+  <div class="icon-box">
+    ✅
+  </div>
+</div>
+
+<div class="container">
+  <div class="form-card">
+    <h2>🗓 Create Account</h2>
+
+    <form id="eventForm" method="post" action="add_account">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="e.g., First name Last name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      
+
+      <input type="submit" value="✅ Create an account" class="submit-btn">
+    
+    </form>
+
+        <div id="outputSummary" class="output">Fill out the form and submit to create you account. If you have an account please <a href="/login">Login</a></div>
+
+
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/js.js') }}"></script>
+
+</body>
+</html>

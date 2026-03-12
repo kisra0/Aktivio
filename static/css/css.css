@@ -1,0 +1,341 @@
+body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .calendar-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 300px;
+      width: 100%;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="date"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .output {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #007BFF;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #e3f2fd, #fce4ec);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 650px;
+  padding: 20px;
+}
+
+.ccc {
+  width: 100%;
+  max-width: 650px;
+  padding: 20px;
+}
+.container_home {
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+}
+
+.form-card {
+  background-color: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 30px 25px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+input[type="text"],
+input[type="file"],
+input[type="date"],
+input[type="time"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: 0.3s ease;
+}
+
+input:focus {
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+}
+
+.submit-btn  {
+  width: 100%;
+  padding: 12px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn :hover {
+  background-color: #1976d2;
+}
+
+.output {
+  margin-top: 20px;
+  font-size: 15px;
+  color: #444;
+  background-color: #f1f8ff;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cfd8dc;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  background-color: rgba(153, 225, 119, 0.3);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.icon-box {
+  font-size: 60px;
+  background: white;
+  padding: 30px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  animation: pop 0.5s ease-out forwards;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+
+ .c_date {
+      max-width: 700px;
+      background-color: white;      
+       border-radius: 2%;
+       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+       font-size: 10px !important;
+
+    }
+
+    .card {
+      position: relative;
+      border-radius: 12px;
+      padding: 20px 50px 20px 20px;
+      margin-bottom: 20px;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .options-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+    }
+    .options-button:hover {
+      background-color: transparent;
+    }
+
+    /* Define 10 background color classes */
+    .color-0 { background: #1abc9c; }
+    .color-1 { background: #3498db; }
+    .color-2 { background: #9b59b6; }
+    .color-3 { background: #e67e22; }
+    .color-4 { background: #e74c3c; }
+    .color-5 { background: #2ecc71; }
+    .color-6 { background: #f39c12; }
+    .color-7 { background: #16a085; }
+    .color-8 { background: #2980b9; }
+    .color-9 { background: #8e44ad; }
+
+
+
+      .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+
+      .add-button {
+      background-color: #d0eaff;
+      color: #3498db;
+      border: none;
+      border-radius: 55%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .add-button:hover {
+      background-color: #3498db;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+  .op {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  width: 160px;
+  z-index: 100;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.option-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s;
+}
+
+.option-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+.hidden {
+  display: none;
+}
+
+
+
+
+    .exit-button {
+   position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border: 2px solid #ccc;
+  color: #333;
+  font-size: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; 
+}
+
+.exit-button:hover {
+  background: #e53935;
+  color: white;
+  border-color: #e53935;
+}

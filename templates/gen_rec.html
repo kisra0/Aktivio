@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Recommendation</title>
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/css.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+
+  .navbar {
+    background-color: rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+    
+  }
+
+  .navbar-dark .nav-link {
+    color: white !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .navbar-dark .nav-link:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 15px;
+  }
+
+body {
+  background: #375A9A;
+  margin-top: 90px;
+  color: white;
+}
+
+/* Main container */
+.main-area {
+  width: 100% !important;
+  padding: 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Full-width card style */
+.rec-card {
+    width: 100%;
+    height: 240px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.rec-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Top navbar inside card */
+.card-top-bar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(0,0,0,0.35);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* Bottom info bar */
+.card-bottom-info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+.slider-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.slider-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.slider-row::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.slider-btn:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+.slider-left {
+  left: -20px;
+}
+
+.slider-right {
+  right: -20px;
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="home">
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo" width="30" height="30" class="me-2">
+        Aktivio
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+          <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+          <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+          <li class="nav-item"><a class="nav-link" href="recommendation">Recommendations</a></li>
+          <li class="nav-item"><a class="nav-link" href="test_your_self">Tests</a></li>
+          <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+          <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="logout" class="btn btn-light me-2">Logout</a>
+          <div class="d-flex align-items-center text-white">
+            {% if not session['img'] %}
+            <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?o=7rm=3&rs=1&pid=ImgDetMain" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%else%}
+            <img src="{{url_for('static',filename=session['img'])}}" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%endif%}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+<!-- ======================= MAIN CONTENT ======================= -->
+<div class="main-area">
+
+  <!-- SECTION TITLE -->
+  <h2>Your recommendations</h2>
+  <hr class="mb-4">
+
+  <!-- AEROBIC TRAININGS SECTION -->
+  <h4>Aerobic trainings</h4>
+
+<div class="slider-container">
+
+  <!-- Left Button -->
+  <button class="slider-btn slider-left" onclick="slideLeft('aerobicRow')">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+
+  <!-- Right Button -->
+  <button class="slider-btn slider-right" onclick="slideRight('aerobicRow')">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+
+  <!-- SLIDER ROW -->
+  <div class="slider-row" id="aerobicRow">
+
+    <!-- CARD 1 -->
+    <div class="col-md-4">
+      <div class="rec-card">
+        <img src="{{url_for('static', filename='images/your_rec1.png')}}">
+        <div class="card-top-bar"><i class="fa-solid fa-person-walking me-2"></i>Recovery training</div>
+        <div class="card-bottom-info">
+            <span>Time: 40m</span>
+            <span>Kcal: 418</span>
+            <span>Difficulty: easy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="col-md-4">
+      <div class="rec-card">
+        <img src="{{url_for('static', filename='images/your_rec2.png')}}">
+        <div class="card-top-bar"><i class="fa-solid fa-leaf me-2"></i>Alone with nature</div>
+        <div class="card-bottom-info">
+            <span>Time: 40m</span>
+            <span>Kcal: 275</span>
+            <span>Difficulty: easy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="col-md-4">
+      <div class="rec-card">
+        <img src="{{url_for('static', filename='images/your_rec3.png')}}">
+        <div class="card-top-bar"><i class="fa-solid fa-dumbbell me-2"></i>Gam training</div>
+        <div class="card-bottom-info">
+            <span>Time: 1h</span>
+            <span>Kcal: 523</span>
+            <span>Difficulty: medium</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <!-- ======================= SECOND SECTION (REPEATED) ======================= -->
+  <h4 class="mt-5">Anaerobic trainings</h4>
+
+<!-- SLIDER CONTAINER -->
+<div class="slider-container">
+
+  <!-- Left Button -->
+  <button class="slider-btn slider-left" onclick="slideLeft('anaerobicRow')">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+
+  <!-- Right Button -->
+  <button class="slider-btn slider-right" onclick="slideRight('anaerobicRow')">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+
+  <!-- SLIDER ROW -->
+  <div class="slider-row" id="anaerobicRow">
+
+    <!-- CARD 1 -->
+    <div class="col-md-4">
+      <div class="rec-card">
+        <img src="{{url_for('static', filename='images/your_rec4.png')}}">
+        <div class="card-top-bar"><i class="fa-solid fa-person-walking me-2"></i>30 Minute Blast</div>
+        <div class="card-bottom-info">
+            <span>Time: 40m</span>
+            <span>Kcal: 418</span>
+            <span>Difficulty: easy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="col-md-4">
+      <div class="rec-card">
+        <img src="{{url_for('static', filename='images/your_rec6.png')}}">
+        <div class="card-top-bar"><i class="fa-solid fa-dumbbell me-2"></i>All-in calisthenics</div>
+        <div class="card-bottom-info">
+            <span>Time: 40m</span>
+            <span>Kcal: 275</span>
+            <span>Difficulty: easy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="col-md-4">
+      <div class="rec-card">
+        <img src="{{url_for('static', filename='images/your_rec4.png')}}">
+        <div class="card-top-bar"><i class="fa-solid fa-dumbbell me-2"></i>30 Minute Blast</div>
+        <div class="card-bottom-info">
+            <span>Time: 1h</span>
+            <span>Kcal: 523</span>
+            <span>Difficulty: medium</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function slideLeft(id) {
+  document.getElementById(id).scrollLeft -= 300;
+}
+
+function slideRight(id) {
+  document.getElementById(id).scrollLeft += 300;
+}
+</script>
+</div>
+
+</body>
+</html>

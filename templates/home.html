@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home Page</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 19px !important;
+  }
+
+  /* Navbar */
+  .navbar {
+    background-color: rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+  }
+
+  .navbar-dark .nav-link {
+    color: white !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .navbar-dark .nav-link:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 10px;
+  }
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+
+    background-image: url('{{url_for("static", filename="images/hero.jpg")}}');
+    background-size: cover;          /* keeps aspect ratio */
+    background-position: center bottom;  /* crop from top */
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    color: black;
+    text-align: center;
+}
+
+  .hero h3 {
+    margin-top: -20%;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    margin-top: 1rem;
+    width: 44% !important;
+  }
+
+  .hero .bottom-title {
+    position: absolute;
+    bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: 500;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+  }
+
+  /* Main content - full width */
+  .main-content {
+    width: 100%;
+    background: linear-gradient(to bottom, hsl(200, 10%, 94%), #d2e5f3);
+    padding: 50px 15px;
+    color: white;
+  }
+
+  /* Bordered row with two blocks */
+  .bordered-row {
+    border: 2px solid gray;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .info-block {
+    flex: 1;
+    background: rgba(39, 39, 39, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .info-block h3 {
+    margin-bottom: 15px;
+  }
+
+  .time-periods {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .time-periods span {
+    background: white;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
+
+  /* Slider */
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-top: 30px;
+  }
+
+  .slider-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slider-item {
+    flex: 0 0 calc((100% - 40px)/3); /* show exactly 3 images with 20px gap between */
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .slider-item img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 2rem;
+    z-index: 10;
+    border-radius: 5px;
+  }
+
+  .slider-btn-left { left: 10px; }
+  .slider-btn-right { right: 10px; }
+
+  @media (max-width: 992px) {
+    .slider-item { flex: 0 0 calc((100% - 20px)/2); } /* 2 images for medium screens */
+  }
+
+  @media (max-width: 576px) {
+    .slider-item { flex: 0 0 100%; } /* 1 image for small screens */
+    .info-block { flex: 100%; }
+  }
+/* Side containers */
+.hero-side {
+  position: absolute;
+  top: 60%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+}
+
+.hero-left {
+  left: 10%;
+  margin-top: 2%;
+}
+
+.hero-right {
+  right: 10%;
+}
+
+/* Rectangle cards */
+.hero-card {
+  padding-right: 8px;
+  width: 170px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-weight: 600;
+}
+.hero-card i {
+  background-color: #420245;  /* square color */
+  color: white;               /* icon color */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 8px;
+border-bottom-left-radius: 8px;
+border-top-right-radius: 0;
+border-bottom-right-radius: 0;
+  font-size: 0.9rem;
+  border-right: solid;
+}
+
+.hero-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+}
+#f{
+  
+  width:400px !important;
+}
+#s{
+  margin-left: -10% !important;
+   width:250px !important;
+}
+#th{
+  margin-top: 10% !important;
+  margin-left: 10% !important;
+   width:400px !important;
+}
+
+
+
+#fth{
+  width:400px !important;
+}
+#fifth{
+  margin-left: 40% !important;
+   width:300px !important;
+}
+#sth{
+  margin-top: 10% !important;
+  margin-left: 10% !important;
+   width:400px !important;
+}
+.hero-card span {
+    font-size: 0.6rem;
+    font-weight: 400 !important;  
+    color: #47494a;
+}
+
+/* 3 FULL-WIDTH CARDS PER ROW */
+.cards-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  
+  gap: 22px;
+  margin-bottom: 25px;
+}
+
+
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* PROFILE CARD TOP SECTION */
+.profile-card {
+  width: 100%;
+  max-width: 1300px;   /* nice readable width */
+  margin: 140px auto 40px; /* under navbar + spacing */
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+/* Make avatar row resize well */
+@media (max-width: 768px) {
+  .profile-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/* FOCUS SECTION — FULL WIDTH */
+.focus-container {
+  width: 100%;
+  max-width: 1300px;     /* keep centered */
+  margin: 40px auto;     /* space & center */
+  padding: 0 20px;
+  color: white;
+}
+
+/* 3 FULL-WIDTH CARDS PER ROW */
+.cards-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  
+  gap: 22px;
+  margin-bottom: 25px;
+}
+
+/* CARD */
+.card {
+  min-height: 150px;  /* or 180px depending on your design */
+  display: flex;
+  flex-direction: column; /* stack content vertically */
+  justify-content: flex-end; /* bottom-align card-bottom */
+  padding: 20px;
+  border-radius: 14px;
+  position: relative;
+  background: rgba(153, 148, 148, 0.46);
+  color: rgb(0, 0, 0);
+  transition: 0.25s;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.card-icon {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+.card-title {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+.btn-remove {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e74c3c;
+  border: none;
+  border-radius: 50%;
+  width: 26px;      /* circle size */
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;       /* remove inner padding */
+}
+
+.btn-plus {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #1cd031;
+  border: none;
+  border-radius: 50%;
+  width: 26px;      /* circle size */
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;       /* remove inner padding */
+}
+
+.minus-icon {
+  width: 14px;      /* icon size */
+  height: 14px;
+  object-fit: contain;
+}
+
+
+/* Bottom-left layout */
+.card-bottom {
+   position: absolute;
+  left: 15px;
+  bottom: 15px;
+  display: flex;
+  align-items: center;   
+  gap: 10px;  
+}
+
+.icon-img {
+width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 0;  
+}
+  </style>
+</head>
+<body>
+  {%if not_log %}
+  <script>alert("Please login first and try again");</script>
+  {%endif%}
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="home">
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo" width="30" height="30" class="me-2">
+        Aktivio
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+          <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+          <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+          <li class="nav-item"><a class="nav-link" href="recommendation">Recommendations</a></li>
+          <li class="nav-item"><a class="nav-link" href="test_your_self">Test yourself</a></li>
+          <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+          <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          {%if message %}
+          <a href="logout" class="btn btn-light me-2">Logout</a>
+          <div class="d-flex align-items-center text-white">
+            {% if not session['img'] %}
+            <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?o=7rm=3&rs=1&pid=ImgDetMain" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%else%}
+            <img src="{{url_for('static',filename=session['img'])}}" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%endif%}
+          </div>
+          {%else%}
+          <a href="login" class="btn btn-light me-2">Login</a>
+          <a href="register" class="btn btn-outline-light">Register</a>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h3>Keep Moving, Keep Living.
+      <br>
+Train for Life — In Every Sport.
+</h3>
+<p>
+  Discover freedom in movement: breathe deeper, move bolder — here every workout brings a fresh boost of energy, supports your well-being, and builds healthy habits.
+</p>
+
+<div class="hero-side hero-left">
+  <div class="hero-card" id="f">
+<i class="fas fa-heart"></i>
+    <span>Follow recommendations tailored to your interests</span>
+  </div>
+  <div class="hero-card" id="s">
+    <i class="fas fa-flag-checkered"></i>
+    <span>Plan your workouts</span>
+  </div>
+  <div class="hero-card" id="th">
+    <i class="fas fa-stethoscope"></i>
+    <span>Get information about health and medical conditions</span>
+  </div>
+</div>
+
+<div class="hero-side hero-right">
+  <div class="hero-card" id="fth">
+    <i class="fas fa-mobile-screen"></i>
+    <span>Customize your home screen to match your goals</span>
+  </div>
+  <div class="hero-card" id="fifth">
+    <i class="fas fa-pencil"></i>
+    <span>View details for every recorded activity</span>
+  </div>
+  <div class="hero-card" id="sth">
+  <i class="fas fa-shield-alt"></i>
+    <span>Analyze and compare your health stats over time</span>
+  </div>
+</div>
+    {%if message %}
+    <div class="bottom-title">Have a good day, {{ session['name'] }}!</div>
+    {%endif%}
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content container-fluid">
+
+    <!-- Two-block bordered row -->
+    <div class="bordered-row d-flex flex-wrap gap-3">
+      <div class="info-block">
+        <h3>Event Date</h3>
+        
+        <div class="event-date text-center">
+          {% if message%}
+          <h4>{{message.today}}</h4>
+          {%else%}
+          <h4>Login to get current events</h4>
+          {%endif%}
+        </div>
+        
+        
+
+      </div>
+      <div class="info-block">
+        <h3>Event Info</h3>
+        {%if message%}
+        {%if message.events%}
+        {%for event in message.events %}
+        <div class="event-title">
+          <h4>{{event[0]}}</h4>
+          <div class="time-periods">
+            <span>Time: {{event[1]}}</span>
+            <span>Duration: {{event[2]}} min</span>
+          </div>
+        </div>
+        <hr>
+        {%endfor%}
+        
+        {%else%}
+        <h4>No events today</h4>
+        {%endif%}
+        {%endif%}
+      </div>
+    </div>
+      <div class="cards-grid">
+{%if message %}
+    {%if message.added_cards%}
+
+    {%for c in message.added_cards %}
+         <div class="card selected">
+
+  <div class="card-bottom">
+    <img src="{{ url_for('static', filename='images/' + c.img) }}" class="icon-img" />
+    <p>{{c.title}}</p>
+  </div>
+</div>
+    {%endfor%}
+    {%endif%}
+     {%endif%}
+  </div>
+
+    <!-- Slider -->
+    <!-- <div class="slider-container mt-4">
+      <button class="slider-btn slider-btn-left">&#10094;</button>
+      <div class="slider-track">
+        <div class="slider-item">Information 1</div>
+        <div class="slider-item">Information 2</div>
+        <div class="slider-item">Information 3</div>
+      </div>
+      <button class="slider-btn slider-btn-right">&#10095;</button>
+    </div> -->
+
+  </div>
+
+  <!-- Slider JS -->
+  <script>
+  const track = document.querySelector('.slider-track');
+  const slides = Array.from(document.querySelectorAll('.slider-item'));
+  const nextBtn = document.querySelector('.slider-btn-right');
+  const prevBtn = document.querySelector('.slider-btn-left');
+  let index = 0;
+
+  const slideWidth = () => slides[0].getBoundingClientRect().width + 20; // width + gap
+
+  function showSlide(i) {
+    if(i < 0) index = slides.length - 3; // show last 3
+    else if(i > slides.length - 3) index = 0;
+    else index = i;
+    track.style.transform = `translateX(-${index * slideWidth()}px)`;
+  }
+
+  nextBtn.addEventListener('click', () => showSlide(index+1));
+  prevBtn.addEventListener('click', () => showSlide(index-1));
+
+  window.addEventListener('resize', () => showSlide(index)); // recalc width on resize
+
+  setInterval(() => showSlide(index+1), 5000);
+  </script>
+
+</body>
+</html>

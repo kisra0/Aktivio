@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PHQ Testing</title>
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/css.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <style>
+   .bmi-result-box {
+  margin-top: 20px;
+  padding: 16px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  background-color: #fdfdfd;
+  max-width: 500px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.bmi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bmi-header h3 {
+  margin: 0;
+}
+
+.bmi-state {
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background-color: #90EE90;
+  color: #226622;
+}
+
+.bmi-value {
+  font-size: 0.8em;
+  margin: 12px 0;
+}
+
+.bmi-scale-container {
+  margin-top: 10px;
+}
+
+.bmi-scale-bar {
+  position: relative;
+  height: 14px;
+  border-radius: 7px;
+  background: linear-gradient(to right,
+    #87CEFA 0%,
+    #87CEFA 26%,
+    #90EE90 26%,
+    #90EE90 49%,
+    #FFD700 49%,
+    #FFD700 66%,
+    #FF6347 66%,
+    #FF6347 100%);
+}
+
+.bmi-pointer {
+  position: absolute;
+  top: -6px;
+  width: 2px;
+  height: 26px;
+  background-color: black;
+  transition: left 0.3s ease-in-out;
+}
+
+.bmi-scale-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85em;
+  margin-top: 4px;
+  color: #444;
+}
+
+  </style>
+      <style>
+  .navbar {
+    background-color: rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+  }
+
+  .navbar-dark .nav-link {
+    color: white !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .navbar-dark .nav-link:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 15px;
+  }
+  .res_phq{
+    margin-left: 20%;
+    margin-top: 2%;
+  }
+  /* ===== PAGE BACKGROUND (same as previous) ===== */
+body {
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #e07a2f 0%,     /* dark orange */
+    #d08f60 5%,    /* keep orange ONLY first 10% */
+    #fbddc5 10%,    /* quick soften */
+    #f4eee9 25%,    /* transition */
+    #ffffff 100%   /* pure white */
+  );
+}
+
+/* ===== CENTER ALL CONTENT (no card look) ===== */
+.ccc {
+  display: flex;
+  justify-content: center;
+}
+
+/* remove card feeling */
+.form-card {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.back-body {
+  position: fixed;
+  top: 110px;
+  left: 20px;
+  font-size: 2.4rem;     /* BIG arrow */
+  font-weight: 700;
+  color: #222;
+  text-decoration: none; /* NO underline */
+  z-index: 1000;
+  line-height: 1;
+}
+
+.back-body:hover {
+  color: #000;
+  text-decoration: none; /* keep underline OFF */
+}
+
+
+</style>
+</head>
+<body>
+  <a href="test_your_self" class="back-body">←</a>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="home">
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo" width="30" height="30" class="me-2">
+        Aktivio
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+          <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+          <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Recommendations</a></li>
+          <li class="nav-item"><a class="nav-link" href="test_your_self">Tests</a></li>
+          <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+          <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="logout" class="btn btn-light me-2">Logout</a>
+          <div class="d-flex align-items-center text-white">
+            {% if not session['img'] %}
+            <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?o=7rm=3&rs=1&pid=ImgDetMain" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%else%}
+            <img src="{{url_for('static',filename=session['img'])}}" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%endif%}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<div id="overlay" class="overlay">
+  <div class="icon-box">
+    ✅
+  </div>
+</div>
+<div style="padding-top: 9% !important;">
+<div class="ccc">
+  <div class="form-card">
+    <h2>🗓 PHQ Health Status (Depression Questionnaire)</h2>
+
+    <form id="eventForm" method="post" action="test_phq_action">
+      <div class="form-group">
+        <label for="name">Q1. Little interest or pleasure in doing things?</label>
+        <select id="q1" name="q1">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q2. Feeling down, depressed, or hopeless?</label>
+        <select id="q2" name="q2">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q3. Trouble falling or staying asleep, or sleeping too much?</label>
+        <select id="q3" name="q3">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q4. Feeling tired or having little energy?</label>
+        <select id="q4" name="q4">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q5. Poor appetite or overeating?</label>
+        <select id="q5" name="q5">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q6. Feeling bad about yourself - or that you are a failure or have let yourself or your family down?</label>
+        <select id="q6" name="q6">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q7. Trouble concentrating on things, such as reading the newspaper or watching television?</label>
+        <select id="q7" name="q7">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q8. Moving or speaking so slowly that other people could have noticed? Or so fidgety or restless that you have been moving a lot more than usual?</label>
+        <select id="q8" name="q8">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Q9. Thoughts that you would  be better off dead, or thoughts of hurting yourself in some way?</label>
+        <select id="q9" name="q9">
+          <option value="opt1" selected>Not at all</option>
+          <option value="opt2">Several days</option>
+          <option value="opt3">More than half the days</option>
+          <option value="opt4">Nearly every day</option>
+        </select>
+      </div>
+      <input type="submit" value="📈 Show Result" class="submit-btn">
+    
+    </form>
+        
+        <div id="outputSummary" class="output">Fill out the form and submit to test your BMI. You can find you <a href="phq_history">history</a></div>
+        {%if results%}
+       
+        <div>
+          <img class="res_phq" src="{{ url_for('static', filename='images/phq_res.jpeg') }}"/>
+        </div>
+        {%endif%}
+
+  </div>
+</div>
+</div>
+<script src="{{ url_for('static', filename='js/js.js') }}"></script>
+
+</body>
+</html>

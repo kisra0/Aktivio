@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Articles</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+
+<style>
+/* ---------- PAGE BACKGROUND ---------- */
+body {
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #e02f4a 0%,
+    #d0609c 5%,
+    #fbc5ea 10%,
+    #f4eee9 25%,
+    #ffffff 100%
+  );
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  background-color: rgba(0,0,0,0.3);
+}
+.navbar-dark .nav-link {
+  color: white !important;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+.navbar-dark .nav-link:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  font-weight: 600;
+}
+.navbar-nav .nav-item {
+  margin: 0 15px;
+}
+
+/* ---------- PAGE CONTAINER ---------- */
+.article-container {
+  padding-top: 120px;
+  padding-bottom: 60px;
+}
+
+/* ---------- TITLE ---------- */
+.article-title {
+  text-align: center;
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #2d2d2d;
+}
+
+/* ---------- INTRO TEXT ---------- */
+.article-intro {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #444;
+}
+
+/* ---------- IMAGE ---------- */
+.article-image {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  margin-bottom: 40px;
+}
+
+/* ---------- ARTICLE CONTENT ---------- */
+.article-content {
+  max-width: 900px;
+  margin: auto;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: #333;
+}
+
+.article-content p {
+  margin-bottom: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="home">
+      <img src="{{url_for('static', filename='images/logo.png')}}" width="30" height="30" class="me-2">
+      Aktivio
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+        <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+        <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Recommendations</a></li>
+        <li class="nav-item"><a class="nav-link" href="test_your_self">Tests</a></li>
+        <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+        <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <a href="logout" class="btn btn-light me-2">Logout</a>
+        {% if not session['img'] %}
+        <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa"
+             width="30" height="30" class="rounded-circle">
+        {% else %}
+        <img src="{{url_for('static',filename=session['img'])}}"
+             width="30" height="30" class="rounded-circle">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= ARTICLE CONTENT ================= -->
+<div class="article-container">
+
+  <!-- TITLE -->
+  <div class="article-title">
+    Healthy Ageing
+  </div>
+
+  <!-- INTRO TEXT -->
+  <div class="article-intro">
+   Every person – in every country in the world – should have the opportunity to live a long and healthy life. Yet, the environments in which we live can favour health or be harmful to it. Environments are highly influential on our behaviour, our exposure to health risks (for example, air pollution or violence), our access to quality health and social care and the opportunities that ageing brings. 
+Healthy ageing is about creating the environments and opportunities that enable people to be and do what they value throughout their lives. Everybody can experience healthy ageing. Being free of disease or infirmity is not a requirement for healthy ageing, as many older adults have one or more health conditions that, when well controlled, have little influence on their wellbeing.
+
+  </div>
+
+  <!-- IMAGE -->
+  <img
+    src="{{ url_for('static', filename='images/health_age.png') }}"
+    alt="Healthy ageing"
+    class="article-image">
+
+  <!-- TEXT CONTENT -->
+  <div class="article-content">
+    <p>
+    What is functional ability and how does it relate to healthy ageing?
+
+WHO defines healthy ageing as “the process of developing and maintaining the functional ability that enables wellbeing in older age.” Functional ability is about having the capabilities that enable all people to be and do what they have reason to value. This includes a person’s ability to:
+
+    </p>
+
+    <ul>
+      <li>meet their basic needs;</li>
+      <li>learn, grow and make decisions;</li>
+      <li>be mobile;</li>
+      <li>build and maintain relationships; and</li>
+      <li>contribute to society.</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

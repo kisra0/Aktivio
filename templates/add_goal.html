@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add goal</title>
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/css.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: #375A9A;
+  margin-top: 90px;
+  color: white;
+ 
+}
+
+/* PAGE LAYOUT: BODY LEFT + DESCRIPTION RIGHT */
+.main-area {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  padding: 30px;
+}
+
+
+
+  .navbar {
+    background-color: rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+    
+  }
+
+  .navbar-dark .nav-link {
+    color: white !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .navbar-dark .nav-link:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 15px;
+  }
+  .main-btn{
+        background: #5683d6;
+    color: white;
+    border: none;
+    padding: 4px 40px;
+    font-size: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: 0.2s;
+    width: 40%;
+    height: 40px;;
+  }
+.main-btn:hover{
+      background: #2f4c82;
+    transform: scale(1.05);
+}
+.q-block {
+  margin-bottom: 20px;
+}
+
+.q-label {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.q-box {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.q-box:hover {
+  transform: translateY(-2px);
+}
+
+.options {
+  background: #ffffff;
+  border-radius: 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  margin-top: 6px;
+}
+
+.options.open {
+  max-height: 500px; /* large enough to fit all */
+}
+
+.option {
+  display: flex;
+  flex-direction: row;       /* <-- Force text first, checkbox last */
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  opacity: 0;
+  animation: reveal 0.3s forwards;
+}
+
+/* Make sure checkbox stays on the right */
+.option input[type="checkbox"] {
+  order: 2;                 /* <-- Checkbox always last */
+  margin-left: 12px;
+  width: 20px;
+  height: 20px;
+}
+
+
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option input {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes reveal {
+  from { transform: translateY(-10px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.q-box .placeholder {
+  color: #000 !important;   /* text must be black */
+  background: transparent;  /* remove background that hides text */
+}
+.prio-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.prio-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.prio-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prio-input {
+  width: 60%;             /* width of input */
+  height: 36px;            /* height of input */
+  font-size: 16px;         /* text size */
+  color: #000;             /* text color */
+  background: #fff;        /* white background */
+  border: 1px solid #bbb;  /* border */
+  border-radius: 6px;      /* rounded corners */
+  padding: 4px 8px;        /* padding inside input */
+  box-sizing: border-box;  /* include padding in width */
+}
+
+.q-block .option span {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  color: rgb(21, 21, 21); /* or your theme color */
+}
+.prio-option span:first-child {
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+}
+
+</style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="home">
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo" width="30" height="30" class="me-2">
+        Aktivio
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+          <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+          <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+          <li class="nav-item"><a class="nav-link" href="recommendation">Recommendations</a></li>
+          <li class="nav-item"><a class="nav-link" href="test_your_self">Tests</a></li>
+          <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+          <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="logout" class="btn btn-light me-2">Logout</a>
+          <div class="d-flex align-items-center text-white">
+            {% if not session['img'] %}
+            <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?o=7rm=3&rs=1&pid=ImgDetMain" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%else%}
+            <img src="{{url_for('static',filename=session['img'])}}" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%endif%}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<!-------------------------------------------------->
+
+<div class="main-area" style="width: 100% !important;">
+
+  <div class="container" style="max-width: 100%;margin-top:-5% !important">
+
+    <!-- Q1 -->
+   <div class="q-block">
+  <label class="q-label">What is my goal?</label>
+  <div class="q-box" onclick="toggleOptions(this)">
+    <span class="placeholder">Select your goals…</span>
+  </div>
+
+  <div class="options">
+    <label class="option"><input type="checkbox"> Be healthier and more energetic</label>
+    <label class="option"><input type="checkbox"> Feeling more comfortable in my body</label>
+    <label class="option"><input type="checkbox"> Change my figure</label>
+    <label class="option"><input type="checkbox"> Stay active</label>
+    <label class="option"><input type="checkbox"> Others</label>
+  </div>
+</div>
+
+<br>
+
+<div class="q-block">
+  <label class="q-label">What kind of sports I prefer?</label>
+  <div class="q-box" onclick="toggleOptions(this)">
+    <span class="placeholder">Choose sports…</span>
+  </div>
+
+  <div class="options">
+    <label class="option"><input type="checkbox"> Aerobic trainings (cardio)</label>
+    <label class="option"><input type="checkbox"> Anaerobic trainings</label>
+    <label class="option"><input type="checkbox"> Flexibility trainings</label>
+    <label class="option"><input type="checkbox"> Balance trainings</label>
+    <label class="option"><input type="checkbox"> Others</label>
+  </div>
+</div>
+
+<br>
+
+
+
+<div class="q-block">
+  <label class="q-label">What priorities do you have?</label>
+
+  <div class="q-box" onclick="toggleOptions(this)">
+    <span class="placeholder">Choose sports…</span>
+  </div>
+
+  <div class="options">
+
+    <div class="option prio-option">
+      <span>Aerobic trainings (cardio)</span>
+      <div class="prio-right">
+        <span>Prio</span>
+        <input type="number" class="prio-input" style="width: 50% !important; height: 35px !important;" min="1" max="5" placeholder="1">
+      </div>
+    </div>
+
+    <div class="option prio-option">
+      <span>Anaerobic trainings</span>
+      <div class="prio-right">
+        <span>Prio</span>
+        <input type="number" class="prio-input" style="width: 50% !important; height: 35px !important;" min="1" max="5" placeholder="1">
+      </div>
+    </div>
+
+    <div class="option prio-option">
+      <span>Flexibility trainings</span>
+      <div class="prio-right">
+        <span>Prio</span>
+        <input type="number" class="prio-input" style="width: 50% !important; height: 35px !important;" min="1" max="5" placeholder="1">
+      </div>
+    </div>
+
+    <div class="option prio-option">
+      <span>Balance trainings</span>
+      <div class="prio-right">
+        <span>Prio</span>
+        <input type="number" class="prio-input" style="width: 50% !important; height: 35px !important;" min="1" max="5" placeholder="1">
+      </div>
+    </div>
+
+    <div class="option prio-option">
+      <span>Others</span>
+      <div class="prio-right">
+        <span>Prio</span>
+        <input type="number" class="prio-input" style="width: 50% !important; height: 35px !important;" min="1" max="5" placeholder="1">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+    <!-- BUTTON -->
+    <div class="text-center mt-5">
+      <button onclick="window.location.href='rec_waiting'"
+        class="main-btn"
+        style="
+          width: 30% !important;
+          margin-top: 10%;
+        ">
+        Save & see recommendations
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<script>
+function toggleOptions(el) {
+  const options = el.nextElementSibling;
+  options.classList.toggle("open");
+
+  // smooth animation delay per item
+  if (options.classList.contains("open")) {
+    const items = options.querySelectorAll(".option");
+    items.forEach((item, i) => {
+      item.style.animationDelay = (i * 0.06) + "s";
+    });
+  }
+}
+
+// update text inside q-box when selecting items
+document.addEventListener("change", function (e) {
+  if (e.target.type === "checkbox") {
+    const options = e.target.closest(".options");
+    const box = options.previousElementSibling;
+    const placeholder = box.querySelector(".placeholder");
+
+    // get all selected texts
+    const selected = [...options.querySelectorAll("input:checked")]
+      .map(ch => ch.parentElement.innerText.trim());
+
+    if (selected.length === 0) {
+      placeholder.textContent = "Select…";
+      placeholder.style.color = "#999";
+    } else {
+      placeholder.textContent = selected.join(", ");
+      placeholder.style.color = "#000";
+    }
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Articles</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+
+<style>
+/* ---------- PAGE BACKGROUND ---------- */
+body {
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #e02f4a 0%,
+    #d0609c 5%,
+    #fbc5ea 10%,
+    #f4eee9 25%,
+    #ffffff 100%
+  );
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  background-color: rgba(0,0,0,0.3);
+}
+.navbar-dark .nav-link {
+  color: white !important;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+.navbar-dark .nav-link:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  font-weight: 600;
+}
+.navbar-nav .nav-item {
+  margin: 0 15px;
+}
+
+/* ---------- PAGE CONTAINER ---------- */
+.articles-container {
+  padding-top: 120px;
+  padding-bottom: 40px;
+  min-height: 100vh;
+}
+
+/* ---------- SEARCH ---------- */
+.search-row {
+  display: flex;
+  gap: 10px;
+  padding: 0 40px 30px;
+}
+
+.search-row input[type="text"] {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: none;
+}
+
+.search-row .submit-btn {
+  width: 90px;
+  border-radius: 12px;
+  border: none;
+}
+
+/* ---------- TITLE ---------- */
+.page-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2d2d2d;
+}
+
+/* ---------- GRID (LOCKED – SAME ALWAYS) ---------- */
+/* ---------- GRID (FIXED CARD SIZE ALWAYS) ---------- */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 360px); /* FIXED CARD WIDTH */
+  grid-auto-rows: 260px;
+  gap: 20px;
+  padding: 0 40px;
+  justify-content: center;  /* CENTER GRID WHEN FEW CARDS */
+}
+
+
+/* ---------- CARD ---------- */
+.article-grid .card {
+  height: 100%;
+  border-radius: 18px;
+  padding: 25px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.article-grid .card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+/* ---------- CARD TEXT ---------- */
+.article-grid .card h5 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 992px) {
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="home">
+      <img src="{{url_for('static', filename='images/logo.png')}}" width="30" height="30" class="me-2">
+      Aktivio
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+        <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+        <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Recommendations</a></li>
+        <li class="nav-item"><a class="nav-link" href="test_your_self">Tests</a></li>
+        <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+        <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+        <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center">
+        <a href="logout" class="btn btn-light me-2">Logout</a>
+        {% if not session['img'] %}
+        <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa"
+             width="30" height="30" class="rounded-circle">
+        {% else %}
+        <img src="{{url_for('static',filename=session['img'])}}"
+             width="30" height="30" class="rounded-circle">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= CONTENT ================= -->
+<div class="articles-container">
+
+  <div class="search-row">
+    <input type="text" id="search" name="search"
+           placeholder="Enter your article to search">
+    <input type="submit" value="Search"
+           class="submit-btn" onclick="search()">
+  </div>
+
+  <div class="page-title">Articles</div>
+
+  <div class="article-grid">
+    {% for article in articles_list %}
+    {%if article[0] == 'Healthy ageing' %}
+    <div class="card color-{{article[2]}}"
+         onclick="window.location.href='/health_ageing_article'">
+      <h5>{{article[0]}}</h5>
+    </div>
+
+    {%else%}
+    <div class="card color-{{article[2]}}"
+         onclick="window.location.href='get_url_content?url={{article[1]}}'">
+      <h5>{{article[0]}}</h5>
+    </div>
+    {%endif%}
+    {% endfor %}
+  </div>
+
+</div>
+
+<script>
+function search(){
+  let kw = document.getElementById("search").value;
+  window.location.href = "/search?kw=" + kw;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generating</title>
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/css.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: #375A9A;
+  margin-top: 90px;
+  color: white;
+ 
+}
+
+/* PAGE LAYOUT: BODY LEFT + DESCRIPTION RIGHT */
+.main-area {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  padding: 30px;
+}
+
+
+
+  .navbar {
+    background-color: rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+    
+  }
+
+  .navbar-dark .nav-link {
+    color: white !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+
+  .navbar-dark .nav-link:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: 600;
+  }
+
+  .navbar-nav .nav-item {
+    margin: 0 15px;
+  }
+  .main-btn{
+        background: #5683d6;
+    color: white;
+    border: none;
+    padding: 4px 40px;
+    font-size: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: 0.2s;
+    width: 40%;
+    height: 40px;;
+  }
+.main-btn:hover{
+      background: #2f4c82;
+    transform: scale(1.05);
+}
+
+
+</style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="home">
+        <img src="{{url_for('static', filename='images/logo.png')}}" alt="Logo" width="30" height="30" class="me-2">
+        Aktivio
+      </a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="event_form">Add Event</a></li>
+          <li class="nav-item"><a class="nav-link" href="event_calender">Calendar</a></li>
+          <li class="nav-item"><a class="nav-link" href="workouts">Workouts</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Recommendations</a></li>
+          <li class="nav-item"><a class="nav-link" href="test_your_self">Tests</a></li>
+          <li class="nav-item"><a class="nav-link" href="body_members">Human model</a></li>
+          <li class="nav-item"><a class="nav-link" href="articles">Articles</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile">My Profile</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="logout" class="btn btn-light me-2">Logout</a>
+          <div class="d-flex align-items-center text-white">
+            {% if not session['img'] %}
+            <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?o=7rm=3&rs=1&pid=ImgDetMain" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%else%}
+            <img src="{{url_for('static',filename=session['img'])}}" alt="Profile" width="30" height="30" class="rounded-circle">
+            {%endif%}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<!-------------------------------------------------->
+
+<div class="main-area" 
+     style="width: 100% !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;">
+   <img src="{{ url_for('static', filename='images/rec_waiting.png') }}"
+         alt="Centered Image"
+         style="max-width: 60%; border-radius: 10px; box-shadow: none;">
+
+    <p style="margin-top: -40px; font-size: 20px; font-weight: 600;color :black">
+        Recommendations Generating
+    </p>
+<script>
+  setTimeout(function () {
+    window.location.href = "gen_rec";  
+  }, 5000);
+</script>
+</body>
+</html>

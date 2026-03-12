@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Body Members</title>
+    <link rel="stylesheet"  href="{{ url_for('static', filename='css/css.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+ <style>
+  .body-container {
+      position: relative;
+      width: 300px;
+      background-color: white;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        padding: 2%;
+
+    }
+
+    .body-image {
+      width: 100%;
+      display: block;
+    }
+
+    .member-button {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+    }
+
+    .member-button:hover {
+      background-color: #1976D2;
+    }
+
+    /* Example positions */
+    .head {
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .chest {
+      top: 160px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .left-arm {
+      top: 200px;
+      left: 30px;
+    }
+
+    .heart {
+      top: 170px;
+      right: 90px;
+    }
+
+    .stomach {
+      top: 270px;
+      right: 120px;
+    }
+
+ .kidneys {
+      top: 250px;
+      right: 190px;
+    }
+
+     .bladder {
+      top: 280px;
+      right: 120px;
+    }
+     .intestine {
+      top: 300px;
+      right: 160px;
+    }
+
+      .reproductive {
+      top: 380px;
+      right: 123px;
+    }
+    .legs {
+      top: 520px;
+      left: 44%;
+      transform: translateX(-50%);
+    }
+
+
+    .open-panel-btn {
+      padding: 12px 24px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .slide-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      width: 300px;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      color: black;
+      transition: all 0.3s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .overlay.active {
+      display: block;
+    }
+
+    .overlay.active .slide-panel {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Panel content */
+    .slide-panel h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .slide-panel p {
+      margin: 0;
+      line-height: 1.4;
+    }
+
+
+ </style>
+     <style>
+  .navbar-dark .nav-link {
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  .navbar-dark .nav-link:hover {
+    transform: scale(1.05);
+    color:#fdfeff;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <div class="container-fluid">
+     <a class="navbar-brand d-flex align-items-center" href="home">
+      <img src="{{url_for('static', filename='body.png')}}" alt="Logo" width="30" height="30" class="me-2">
+      Activio
+    </a>
+     <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+  <li class="nav-item">
+    <a class="nav-link text-white" href="event_form">Add Event</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white" href="event_calender">View Calendar</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white" href="test_your_self">Test Your Self</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white" href="body_members">Body Parts</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white" href="articles">Articles</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-white" href="#">My Profile</a>
+  </li>
+</ul>
+    <div class="d-flex align-items-center">
+      <a href="logout" class="btn btn-light me-2" data-bs-toggle="modal" style="visibility: hidden !important;">Logout</a>
+      <a href="logout" class="btn btn-light me-2" data-bs-toggle="modal">Logout</a>
+      <div class="d-flex align-items-center text-white">
+          <span class="me-2">Hi, {{ session['name'] }}</span>
+          {% if not session['img'] %}
+          <img src="https://th.bing.com/th/id/OIP.2fjfpvyy6AslG7GH5mipHgHaHa?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Profile" width="30" height="30" class="rounded-circle">
+
+          {%else%}
+                    <img src="{{url_for('static',filename=session['img'])}}" alt="Profile" width="30" height="30" class="rounded-circle">
+
+          {%endif%}
+        </div>
+    </div>
+  </div>
+  </div>
+</nav>
+
+ <div class="body-container" style="margin-top: 2%;">
+  <img src="{{ url_for('static', filename='body.png') }}" alt="Human Body" class="body-image">
+  
+  <button class="member-button head" title="Head" onclick="togglePanel(true,'head')">
+    <img src="{{ url_for('static', filename='head.png') }}" alt="head " style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+
+  </button>
+
+  <button class="member-button chest" title="Chest" onclick="togglePanel(true,'chest')">
+    <img src="{{ url_for('static', filename='lung.png') }}" alt="lung  " style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+  </button>
+
+  <button class="member-button left-arm" title="Arm" onclick="togglePanel(true,'arm')">
+    <i class="fas fa-hand-paper"></i>
+  </button>
+
+  <button class="member-button heart" title="Heart" onclick="togglePanel(true,'heart')">
+    <img src="{{ url_for('static', filename='heart.png') }}" alt="heart  " style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+  </button>
+  <button class="member-button stomach" title="Stomach" onclick="togglePanel(true,'stomach')">
+<img src="{{ url_for('static', filename='stomach.png') }}" alt="Stomach" style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+</button>
+
+  <button class="member-button kidneys" title="Kidneys" onclick="togglePanel(true,'kidneys')">
+<img src="{{ url_for('static', filename='kidneys.png') }}" alt="Kidneys" style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+</button>
+
+<button class="member-button intestine" title="Intestine" onclick="togglePanel(true,'intestine')">
+<img src="{{ url_for('static', filename='intestine.png') }}" alt="Intestine" style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+</button>
+
+<button class="member-button reproductive" title="Reproductive" onclick="togglePanel(true,'reproductive')">
+<img src="{{ url_for('static', filename='reproductive.png') }}" alt="Reproductive" style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+</button>
+
+  <button class="member-button legs" title="Legs" onclick="togglePanel(true,'legs')">
+    <i class="fas fa-shoe-prints"></i>
+  </button>
+</div>
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+    <div class="slide-panel">
+      <h2 id="title">Panel Title</h2>
+      <hr style="color:grey;background-color:grey"><br>
+      <p id="desc" style="text-align: justify;">This is a white background panel with black text. Click outside to close.</p>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+
+    function togglePanel(show,type) {
+      id = document.getElementById("title");
+      desc = document.getElementById("desc");
+      if(type == "head"){
+  id.innerHTML = "Head";
+  desc.innerHTML = "The head houses the brain, the central command of the body. It also contains important sensory organs like the eyes, ears, nose, and mouth. It controls thoughts, memory, emotions, and movement.";
+}
+
+if(type == "chest"){
+  id.innerHTML = "Chest";
+  desc.innerHTML = "The chest protects vital organs such as the heart and lungs. It supports breathing, circulation, and is enclosed by the rib cage and muscles.";
+}
+
+if(type == "arm"){
+  id.innerHTML = "Arm";
+  desc.innerHTML = "The arms allow for a wide range of motion and are essential for grasping, lifting, and interacting with the environment. They include muscles, bones, and nerves that enable movement and strength.";
+}
+
+if(type == "heart"){
+  id.innerHTML = "Heart";
+  desc.innerHTML = "The heart pumps blood throughout the body, delivering oxygen and nutrients to tissues and removing waste. It is central to the circulatory system and vital for life.";
+}
+
+if(type == "stomach"){
+  id.innerHTML = "Stomach";
+  desc.innerHTML = "The stomach breaks down food using acids and enzymes. It plays a key role in digestion and prepares nutrients for absorption in the intestines.";
+}
+
+if(type == "kidneys"){
+  id.innerHTML = "Kidneys";
+  desc.innerHTML = "The kidneys filter blood to remove waste and excess fluids, maintaining a healthy balance of water, salts, and minerals. They are vital for detoxification and blood pressure regulation.";
+}
+
+if(type == "bladder"){
+  id.innerHTML = "Bladder";
+  desc.innerHTML = "The bladder stores urine before it is excreted from the body. It is part of the urinary system and helps manage waste elimination.";
+}
+
+if(type == "intestine"){
+  id.innerHTML = "Intestine";
+  desc.innerHTML = "The intestines absorb nutrients and water from food. The small intestine handles most digestion, while the large intestine processes waste for excretion.";
+}
+
+if(type == "reproductive"){
+  id.innerHTML = "Reproductive System";
+  desc.innerHTML = "The reproductive system is responsible for producing offspring. It includes organs like ovaries and testes, and is essential for hormone production and sexual health.";
+}
+
+if(type == "legs"){
+  id.innerHTML = "Legs";
+  desc.innerHTML = "The legs support body weight, enable standing, walking, and running. They contain strong muscles, bones, and joints essential for mobility.";
+}
+      if (show) {
+        overlay.classList.add('active');
+      } else {
+        overlay.classList.remove('active');
+      }
+    }
+
+    function handleOverlayClick(e) {
+      // Only close if clicked outside the panel
+      if (e.target === overlay) {
+        togglePanel(false);
+      }
+    }
+  </script>
+</body>
+</html>
